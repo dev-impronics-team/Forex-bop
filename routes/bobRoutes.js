@@ -14,7 +14,7 @@ router.post("/create", async (req, res) => {
 router.get("/getAll", async (req, res) => {
   try {
     const bobs = await db.forex_bop.findAll({
-      order: [['created_date', 'DESC']]
+      order: [['created_at', 'DESC']]
     });
     res.status(200).json(bobs);
   } catch (error) {
