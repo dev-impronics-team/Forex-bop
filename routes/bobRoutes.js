@@ -139,7 +139,6 @@ router.post("/cancelReplaceTransaction", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    // const { ...updateFields } = req.body;
     const { bopData, bopCategoryData } = req.body;
     
     if (!id) {
@@ -156,12 +155,11 @@ router.put("/:id", async (req, res) => {
       return res.status(404).json({ error: "Bop category data not found" });
     }
 
-    await bopDetails.update(...bopData);
-    await bopCategoryDetails.update(...bopCategoryData);
+    await bopDetails.update(bopData);
+    await bopCategoryDetails.update(bopCategoryData);
 
     res.status(200).json({
-      message: "Data updated successfully",
-      bopDetails,
+      message: "Data updated successfully"
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
