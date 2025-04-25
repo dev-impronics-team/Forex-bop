@@ -83,7 +83,7 @@ module.exports = (sequelize, DataTypes) => {
       benificiary_physical_address_line2: DataTypes.STRING,
       benificiary_physical_address_line3: DataTypes.STRING,
       benificiary_suburb: DataTypes.STRING,
-      benificiary_postcode: DataTypes.STRING,
+      benificiary_post_code: DataTypes.STRING,
       benificiary_country: DataTypes.STRING,
       benificiary_state: DataTypes.STRING,
       benificiary_name: DataTypes.STRING,
