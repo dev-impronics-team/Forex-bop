@@ -139,23 +139,29 @@ router.post("/cancelReplaceTransaction", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const { ...updateFields } = req.body;
-
+    // const { ...updateFields } = req.body;
+    const { bopData, bopCategoryData } = req.body;
+    
     if (!id) {
-      return res.status(400).json({ error: "id is required" });
+      return res.status(400).json({ error: "Id is required" });
     }
 
-    const transaction = await db.forex_bop.findByPk(id);
+    const bopDetails = await db.forex_bop.findByPk(id);
+    const bopCategoryDetails = await db.forex_bop_category.findByPk(bopCategoryData.id)
 
-    if (!transaction) {
-      return res.status(404).json({ error: "Transaction not found" });
+    if (!bopDetails) {
+      return res.status(404).json({ error: "Bop data not found" });
+    }
+    if (!bopCategoryDetails) {
+      return res.status(404).json({ error: "Bop category data not found" });
     }
 
-    await transaction.update(updateFields);
+    await bopDetails.update(...bopData);
+    await bopCategoryDetails.update(...bopCategoryData);
 
     res.status(200).json({
-      message: "Transaction updated successfully",
-      transaction,
+      message: "Data updated successfully",
+      bopDetails,
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
