@@ -238,7 +238,7 @@ router.get("/:transactionNumber/:transactionAttempt", async (req, res) => {
 
 router.post("/release-bopdata", async (req, res) => {
   try {
-    const { transaction_number, transaction_attempt, sap_status } = req.body;
+    const { transaction_number, transaction_attempt } = req.body;
 
     // if (!transaction_number || !transaction_attempt) {
     //   return res
@@ -277,7 +277,8 @@ router.post("/release-bopdata", async (req, res) => {
     // );
     await db.forex_bop.update(
       {
-        sap_status: sap_status,
+        sap_status: 'Pending',
+        status:'RELEASED'
       },
       {
         where: {
