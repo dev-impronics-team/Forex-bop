@@ -2,6 +2,7 @@ const express = require("express");
 const { db } = require("./models");
 const bobRouter = require("./routes/bobRoutes");
 const bopCategoryRouter = require("./routes/bopCategoryRoutes");
+const staticRouter = require("./routes/staticRoutes")
 const cors = require("cors");
 require("./utils/scheduler");
 const { exportToExcel } = require("./utils/scheduler");
@@ -23,6 +24,8 @@ app.get("/", (req, res) => {
 
 app.use("/bop", bobRouter);
 app.use("/bopCategory", bopCategoryRouter);
+app.use("/static", staticRouter);
+
 app.get("/export", async (req, res) => {
   try {
     await exportToExcel();
@@ -31,11 +34,7 @@ app.get("/export", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-// console.log(
-//   "hgshcshjcgjckscbhvgjskcnhcvjsjcxkshcvjdhcis",
-//   db.forex_bop.findAll(),
-//   "hgshcshjcgjckscbhvgjskcnhcvjsjcxkshcvjdhcis"
-// );
+
 db.sequelize
   .sync()
   .then(() => {

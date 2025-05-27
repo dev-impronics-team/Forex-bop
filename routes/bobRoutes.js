@@ -2,6 +2,15 @@ const express = require("express");
 const { db } = require("../models");
 const router = express.Router();
 
+router.post("/add/recon", async (req, res) => {
+  try {
+    const reconData = await db.forex_recon.create(req.body);
+    res.status(201).json({ message: "Recon created successfully", reconData });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}); 
+
 router.post("/create", async (req, res) => {
   try {
     const bob = await db.forex_bop.create(req.body);
